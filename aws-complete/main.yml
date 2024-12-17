@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Simple CloudFormation Template to create an EC2 instance
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0c55b159cbfafe1f0 # Replace with a valid AMI ID for your region
+      InstanceType: t2.micro
+      KeyName: MyKeyPair  # Replace with your Key Pair name
+      SecurityGroups:
+        - Ref: MySecurityGroup
+      Tags:
+        - Key: Name
+          Value: MySampleEC2Instance
+
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH and HTTP traffic
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0  # Allows SSH from anywhere
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0  # Allows HTTP traffic from anywhere
